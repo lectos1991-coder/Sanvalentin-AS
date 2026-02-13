@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Feliz San Valentín 💘</title>
+  <style>
+    :root{
+      --bg1:#0b1020;
+      --bg2:#160a25;
+      --card: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.16);
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --accent:#ff4d8d;
+      --gold:#ffd7a6;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(255,77,141,.22), transparent 55%),
+        radial-gradient(900px 600px at 90% 25%, rgba(255,214,166,.16), transparent 58%),
+        radial-gradient(1000px 700px at 50% 95%, rgba(180,90,255,.16), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+
+    /* subtle sparkles */
+    .sparkles{
+      position:fixed; inset:0; pointer-events:none; opacity:.55;
+      background-image:
+        radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.9), transparent 55%),
+        radial-gradient(1.6px 1.6px at 60% 20%, rgba(255,255,255,.7), transparent 55%),
+        radial-gradient(1.8px 1.8px at 80% 55%, rgba(255,255,255,.75), transparent 55%),
+        radial-gradient(1.4px 1.4px at 30% 70%, rgba(255,255,255,.65), transparent 55%),
+        radial-gradient(2.2px 2.2px at 55% 85%, rgba(255,255,255,.85), transparent 55%),
+        radial-gradient(1.6px 1.6px at 10% 90%, rgba(255,255,255,.7), transparent 55%);
+      filter: blur(.15px);
+      animation: drift 10s ease-in-out infinite alternate;
+    }
+    @keyframes drift{ from{transform: translateY(0px)} to{transform: translateY(-10px)} }
+
+    /* Top nav with safe-area */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(10,12,22,.62), rgba(10,12,22,.22));
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      padding-top: env(safe-area-inset-top);
+    }
+    .topbarInner{
+      width:min(980px, 100%);
+      margin:0 auto;
+      padding:10px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800;
+      letter-spacing:.02em;
+      min-width: 0;
+    }
+    .brand small{
+      color:var(--muted);
+      font-weight:600;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:11px;
+      display:block;
+    }
+    .pulseHeart{
+      width:44px; height:44px;
+      border-radius:16px;
+      display:grid; place-items:center;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.28), rgba(255,255,255,.08));
+      border:1px solid rgba(255,255,255,.18);
+      flex:0 0 auto;
+    }
+    .pulseHeart span{
+      font-size:22px;
+      animation: beat 1.15s ease-in-out infinite;
+    }
+    @keyframes beat{
+      0%,100%{transform: scale(1)}
+      40%{transform: scale(1.18)}
+      70%{transform: scale(1.06)}
+    }
+    .miniBtn{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.92);
+      font-weight:800;
+      cursor:pointer;
+      min-height: 44px;
+    }
+
+    .wrap{
+      min-height: calc(100dvh - 64px);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding: 18px 14px calc(76px + env(safe-area-inset-bottom));
+      gap:18px;
+      position:relative;
+    }
+
+    .card{
+      width:min(980px, 100%);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.05));
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 220px at 20% 10%, rgba(255,77,141,.22), transparent 60%),
+        radial-gradient(520px 220px at 80% 20%, rgba(255,214,166,.18), transparent 58%);
+      pointer-events:none;
+      filter: blur(2px);
+      opacity:.85;
+    }
+
+    /* centered hero */
+    .hero{
+      position:relative;
+      padding: 26px 16px 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+      align-items:center;
+      justify-items:center;
+      text-align:center;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:center;
+      text-align:center;
+      max-width: 760px;
+    }
+
+    .eyebrow{
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color: var(--muted);
+    }
+    h1{
+      margin:0;
+      font-size: clamp(26px, 7vw, 52px);
+      line-height:1.05;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size: clamp(14px, 3.9vw, 16px);
+      line-height:1.55;
+      max-width: 60ch;
+    }
+
+    .btnRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; justify-content:center;}
+    .btn{
+      border:1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,77,141,.95), rgba(255,77,141,.72));
+      color:white;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow: 0 12px 28px rgba(255,77,141,.24);
+      transition: transform .15s ease, filter .15s ease;
+      user-select:none;
+      min-height: 44px;
+    }
+    .btn.secondary{
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      box-shadow:none;
+      color: var(--txt);
+    }
+
+    .page{display:none;}
+    .page.active{display:block;}
+
+    /* HEART CTA responsive */
+    .heartStage{
+      position:relative;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 6px 0 10px;
+      min-height: clamp(260px, 45vh, 360px);
+    }
+
+    .heartCTA{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width: min(360px, 92vw);
+      height: min(300px, 70vw);
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.35));
+    }
+
+    .heartShape{
+      position:absolute;
+      inset:0;
+      margin:auto;
+      width: min(260px, 64vw);
+      height: min(230px, 56vw);
+      transform: rotate(-45deg);
+      border-radius: 18px;
+      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.20), rgba(255,77,141,.32) 35%, rgba(255,77,141,.18) 70%, rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.18);
+      animation: heartbeat 1.25s ease-in-out infinite;
+    }
+    .heartShape::before,
+    .heartShape::after{
+      content:"";
+      position:absolute;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border: inherit;
+      border-radius: 50%;
+    }
+    /* offsets scaled with current heart size */
+    .heartShape::before{ top: calc(-1 * (min(230px, 56vw) / 2)); left:0; }
+    .heartShape::after{ left: calc(min(260px, 64vw) / 2); top:0; }
+
+    @keyframes heartbeat{
+      0%,100%{transform: rotate(-45deg) scale(1)}
+      15%{transform: rotate(-45deg) scale(1.06)}
+      30%{transform: rotate(-45deg) scale(0.99)}
+      45%{transform: rotate(-45deg) scale(1.08)}
+      60%{transform: rotate(-45deg) scale(1.00)}
+    }
+
+    .heartInner{
+      position:relative;
+      z-index:2;
+      width: min(260px, 64vw);
+      height: min(230px, 56vw);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      text-align:center;
+      padding: 16px 18px;
+    }
+
+    .heartInner .mini{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:42px;height:42px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(8px);
+      font-size:20px;
+    }
+
+    .heartInner p{
+      margin:0;
+      color: rgba(255,255,255,.80);
+      font-size: clamp(11px, 3.2vw, 12px);
+      line-height:1.35;
+      max-width: 26ch;
+    }
+
+    .heartGo{
+      border:1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      color: var(--txt);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+      min-height: 44px;
+      min-width: 140px;
+    }
+
+    /* Bottom corners (smaller on mobile + safe-area) */
+    .cornerRight, .cornerLeft{
+      position:fixed;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      z-index:30;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.86);
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+    .cornerLeft{ left: calc(10px + env(safe-area-inset-left)); }
+    .cornerRight{ right: calc(10px + env(safe-area-inset-right)); }
+
+    .cornerRight .z{ display:flex; gap:8px; align-items:center; font-size:18px; }
+    .cornerRight .z span{
+      display:inline-grid; place-items:center;
+      width:34px; height:34px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+    }
+
+    .cornerLeft .date{
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.82);
+      white-space: nowrap;
+    }
+    .cornerLeft .tinyHeart{
+      display:inline-grid; place-items:center;
+      width:34px; height:34px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      font-size:18px;
+      animation: beat2 1.2s ease-in-out infinite;
+    }
+    @keyframes beat2{
+      0%,100%{transform: scale(1)}
+      40%{transform: scale(1.16)}
+      70%{transform: scale(1.05)}
+    }
+
+    /* second page layout */
+    .content{
+      position:relative;
+      padding: 18px 14px 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 960px){
+      .content{grid-template-columns:1fr;}
+    }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius:20px;
+      padding:16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.25);
+    }
+
+    .panel h2{ margin:0 0 8px; font-size:18px; letter-spacing:.02em; }
+    .muted{ color:var(--muted); font-size:13px; margin:0 0 10px; line-height:1.5; }
+
+    .counter{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:10px;
+      margin-top:12px;
+    }
+    @media (max-width: 520px){
+      .counter{grid-template-columns: repeat(2, minmax(0,1fr));}
+    }
+    .tile{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      padding:12px 10px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .tile::after{
+      content:"";
+      position:absolute; inset:-40px -40px auto auto;
+      width:90px; height:90px;
+      background: radial-gradient(circle, rgba(255,214,166,.22), transparent 60%);
+      transform: rotate(25deg);
+    }
+    .num{ font-size:22px; font-weight:900; letter-spacing:.02em; }
+    .lbl{ margin-top:2px; font-size:12px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; }
+
+    .note{
+      font-size:14px;
+      line-height:1.7;
+      color: rgba(255,255,255,.85);
+      margin:10px 0 0;
+      white-space:pre-wrap;
+      word-break: break-word;
+    }
+
+    .treeWrap{ display:flex; flex-direction:column; gap:10px; height:100%; }
+    .treeStage2{
+      flex:1;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.16);
+      background:
+        radial-gradient(700px 260px at 50% 10%, rgba(255,77,141,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      position:relative;
+      overflow:hidden;
+      min-height: 300px;
+      display:grid;
+      place-items:center;
+      padding: 10px;
+    }
+    .ground{
+      position:absolute; left:-10%; right:-10%; bottom:-30%;
+      height:60%;
+      background: radial-gradient(circle at 50% 0%, rgba(255,214,166,.22), transparent 58%),
+                  radial-gradient(circle at 30% 20%, rgba(120,220,180,.16), transparent 55%),
+                  radial-gradient(circle at 70% 30%, rgba(120,220,180,.12), transparent 55%);
+      filter: blur(1px);
+    }
+    svg{max-width:100%; height:auto}
+
+    .treeCaption{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .progress{
+      height:10px; border-radius:999px; overflow:hidden;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      flex:1;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(255,77,141,.95), rgba(255,214,166,.85));
+      border-radius:999px;
+      transition: width .35s ease;
+    }
+    .pill{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color:rgba(255,255,255,.86);
+      font-weight:800;
+      white-space: nowrap;
+    }
+
+    /* floating hearts */
+    .hearts{
+      position:fixed; inset:0; pointer-events:none;
+      overflow:hidden;
+    }
+    .heart{
+      position:absolute;
+      font-size:18px;
+      opacity:0;
+      animation: floatUp 7s linear infinite;
+      filter: drop-shadow(0 12px 22px rgba(255,77,141,.18));
+      will-change: transform, opacity;
+    }
+    @keyframes floatUp{
+      0%{transform: translateY(20px) scale(.9); opacity:0}
+      10%{opacity:.75}
+      70%{opacity:.6}
+      100%{transform: translateY(-120vh) scale(1.25); opacity:0}
+    }
+
+    /* Reduce heavy animation on low-power preference */
+    @media (prefers-reduced-motion: reduce){
+      .sparkles{animation:none}
+      .heart{animation:none; opacity:.25}
+      .heartShape{animation:none}
+      .pulseHeart span{animation:none}
+      .cornerLeft .tinyHeart{animation:none}
+    }
+
+    /* extra small phones */
+    @media (max-width: 360px){
+      .cornerLeft, .cornerRight{ transform: scale(.92); transform-origin: bottom left; }
+      .cornerRight{ transform-origin: bottom right; }
+      .hero{padding: 22px 14px 14px;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sparkles"></div>
+  <div class="hearts" id="hearts"></div>
+
+  <!-- Bottom corners -->
+  <div class="cornerLeft" aria-label="Fecha especial">
+    <div class="date">21/12/2025</div>
+    <div class="tinyHeart" aria-hidden="true">💗</div>
+  </div>
+  <div class="cornerRight" aria-label="Signos zodiacales">
+    <div class="z">
+      <span title="Escorpio">♏</span>
+      <span title="Capricornio">♑</span>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="topbarInner">
+      <div class="brand">
+        <div class="pulseHeart" aria-hidden="true"><span>💗</span></div>
+        <div>
+          <div>San Valentín</div>
+          <small>un detalle hecho con amor</small>
+        </div>
+      </div>
+      <button class="miniBtn" id="backBtn" style="display:none;">⬅ Volver</button>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="card page active" id="page1" aria-label="Portada">
+      <div class="hero">
+        <div class="title">
+          <div class="eyebrow">Para el amor de mi vida</div>
+          <h1>Feliz San Valentín<br/>amor mío 💘</h1>
+          <p class="sub">
+            Este es un pequeño detalle para recordarte lo importante que eres para mí. 💖 XOXOXOXOX 💖
+          </p>
+
+          <div class="btnRow">
+            <button class="btn secondary" id="confettiBtn">💖 Lluvia de corazones</button>
+          </div>
+        </div>
+
+        <div class="heartStage">
+          <div class="heartCTA" aria-label="Botón dentro de un corazón">
+            <div class="heartShape" aria-hidden="true"></div>
+            <div class="heartInner">
+              <div class="mini" aria-hidden="true">💘</div>
+              <p>Oprime el botón para ir a la otra ventana</p>
+              <button class="heartGo" id="openBtn">Oprime aquí</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card page" id="page2" aria-label="Contador y árbol">
+      <div class="content">
+        <div class="panel">
+          <h2>Desde el día que nos conocimos…</h2>
+          <p class="muted" id="metDateLabel">Calculando el tiempo…</p>
+
+          <div class="counter" aria-label="Contador">
+            <div class="tile"><div class="num" id="days">0</div><div class="lbl">Días</div></div>
+            <div class="tile"><div class="num" id="hours">0</div><div class="lbl">Horas</div></div>
+            <div class="tile"><div class="num" id="minutes">0</div><div class="lbl">Minutos</div></div>
+            <div class="tile"><div class="num" id="seconds">0</div><div class="lbl">Segundos</div></div>
+          </div>
+
+          <p class="note" id="message">
+Desde el primer día que te vi, supe que ibas a ser alguien muy especial para mí. Con el tiempo lo entendí mejor: la vida nos fue guiando hasta este momento, y hoy, con el corazón en calma y con toda honestidad, sé que eres y siempre serás el amor de mi vida.
+
+Te quiero de una forma que a veces no me caben las palabras, porque lo que siento por ti es más grande que cualquier frase: es cariño, admiración, ternura y una devoción bonita que crece cada día.
+
+Feliz San Valentín a la distancia, amor mío ❤️
+          </p>
+        </div>
+
+        <div class="panel treeWrap">
+          <h2>Un árbol que crece con nuestro tiempo</h2>
+          <p class="muted">Mientras más días pasan, más crece. Como nuestro amor.</p>
+
+          <div class="treeStage2" role="img" aria-label="Árbol que crece con el tiempo">
+            <div class="ground"></div>
+
+            <svg width="420" height="360" viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="6" result="blur"/>
+                  <feColorMatrix in="blur" type="matrix"
+                    values="1 0 0 0 0
+                            0 1 0 0 0
+                            0 0 1 0 0
+                            0 0 0 0.6 0"/>
+                  <feMerge>
+                    <feMergeNode/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <circle cx="210" cy="140" r="118" fill="rgba(255,77,141,.12)" filter="url(#softGlow)"/>
+
+              <g id="trunk" transform="translate(0,0)">
+                <path d="M206 300
+                         C200 270 196 250 198 228
+                         C200 206 208 196 206 176
+                         C204 156 190 142 198 122
+                         C206 102 224 94 234 116
+                         C244 138 232 152 236 174
+                         C240 196 254 210 248 234
+                         C242 258 232 272 228 300"
+                      fill="rgba(255,214,166,.35)"
+                      stroke="rgba(255,214,166,.55)"
+                      stroke-width="3"
+                      stroke-linecap="round"/>
+                <path d="M214 214 C192 196 176 176 164 160" stroke="rgba(255,214,166,.55)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M226 210 C250 194 268 172 286 156" stroke="rgba(255,214,166,.55)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M206 176 C190 164 182 150 174 138" stroke="rgba(255,214,166,.5)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M236 174 C252 162 260 148 270 134" stroke="rgba(255,214,166,.5)" stroke-width="3" stroke-linecap="round"/>
+              </g>
+
+              <g id="canopy" transform="translate(0,0)">
+                <circle cx="160" cy="150" r="54" fill="rgba(255,182,209,.42)"/>
+                <circle cx="210" cy="122" r="66" fill="rgba(255,77,141,.32)"/>
+                <circle cx="268" cy="152" r="58" fill="rgba(255,182,209,.38)"/>
+                <circle cx="220" cy="170" r="72" fill="rgba(255,77,141,.26)"/>
+              </g>
+
+              <g id="fruits" fill="rgba(255,255,255,.92)">
+                <text x="150" y="145" font-size="16">❤</text>
+                <text x="198" y="108" font-size="18">❤</text>
+                <text x="270" y="150" font-size="16">❤</text>
+                <text x="232" y="188" font-size="18">❤</text>
+              </g>
+
+              <ellipse cx="220" cy="308" rx="88" ry="18" fill="rgba(0,0,0,.22)"/>
+            </svg>
+          </div>
+
+          <div class="treeCaption">
+            <span class="pill" id="growthLabel">Creciendo…</span>
+            <div class="progress" aria-label="Progreso de crecimiento"><div class="bar" id="bar"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // FECHA (10 de abril de 2011)
+    const dateWeMet = "2011-04-10T00:00:00";
+
+    // Navegación
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+    const openBtn = document.getElementById("openBtn");
+    const backBtn = document.getElementById("backBtn");
+    const confettiBtn = document.getElementById("confettiBtn");
+
+    function goToPage2(){
+      page1.classList.remove("active");
+      page2.classList.add("active");
+      backBtn.style.display = "inline-block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      displayedProgress = 0;
+      applyTreeProgress(0);
+      animateTreeTo(1, computeDurationFromDays(daysSinceMet));
+    }
+    function goToPage1(){
+      page2.classList.remove("active");
+      page1.classList.add("active");
+      backBtn.style.display = "none";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    openBtn.addEventListener("click", () => { goToPage2(); burstHearts(16); }, {passive:true});
+    backBtn.addEventListener("click", () => goToPage1(), {passive:true});
+    confettiBtn.addEventListener("click", () => burstHearts(22), {passive:true});
+
+    // Contador
+    const met = new Date(dateWeMet);
+    const metDateLabel = document.getElementById("metDateLabel");
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    function pad(n){ return String(n).padStart(2,"0"); }
+    function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+    function fmtDate(d){
+      const opts = { year:"numeric", month:"long", day:"numeric" };
+      return d.toLocaleDateString("es-CO", opts);
+    }
+
+    let daysSinceMet = 0;
+
+    function updateCounter(){
+      const now = new Date();
+      let diffMs = now - met;
+      if (diffMs < 0) diffMs = 0;
+
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const days = Math.floor(totalSeconds / (3600*24));
+      const hours = Math.floor((totalSeconds % (3600*24)) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      daysSinceMet = days;
+
+      daysEl.textContent = days.toLocaleString("es-CO");
+      hoursEl.textContent = pad(hours);
+      minutesEl.textContent = pad(minutes);
+      secondsEl.textContent = pad(seconds);
+
+      metDateLabel.textContent = `Nos conocimos el ${fmtDate(met)} y hoy es ${fmtDate(now)}.`;
+    }
+
+    // Árbol
+    const trunk = document.getElementById("trunk");
+    const canopy = document.getElementById("canopy");
+    const fruits = document.getElementById("fruits");
+    const bar = document.getElementById("bar");
+    const growthLabel = document.getElementById("growthLabel");
+
+    let displayedProgress = 0;
+
+    function applyTreeProgress(progress){
+      const trunkScale = 0.78 + (progress * 0.32);
+      const canopyScale = 0.65 + (progress * 0.55);
+
+      trunk.setAttribute("transform", `translate(0, ${(1-trunkScale)*55}) scale(${trunkScale})`);
+      canopy.setAttribute("transform", `translate(0, ${(1-canopyScale)*70}) scale(${canopyScale})`);
+
+      const fruitOpacity = clamp((progress - 0.18) / 0.35, 0, 1);
+      fruits.setAttribute("opacity", (0.15 + fruitOpacity * 0.85).toFixed(2));
+
+      bar.style.width = `${Math.round(progress*100)}%`;
+
+      const stage =
+        progress < 0.18 ? "Semilla 🌱" :
+        progress < 0.45 ? "Brote 🌿" :
+        progress < 0.75 ? "Creciendo 🌳" :
+        "Fuerte y Costante 💗";
+
+      growthLabel.textContent = `${stage} · ${Math.round(progress*100)}%`;
+    }
+
+    function computeDurationFromDays(days){
+      const d = Math.max(1, days);
+      const ms = 2200 + Math.log10(d) * 2200;
+      return Math.round(clamp(ms, 2800, 16000));
+    }
+
+    function animateTreeTo(targetProgress, durationMs){
+      const start = performance.now();
+      const from = displayedProgress;
+      const to = targetProgress;
+
+      function step(t){
+        const p = clamp((t - start) / durationMs, 0, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        displayedProgress = from + (to - from) * ease;
+        applyTreeProgress(displayedProgress);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Corazones flotantes (menos carga en celular)
+    const hearts = document.getElementById("hearts");
+    const heartChars = ["❤️","💗","💖","💘","💕","💞"];
+
+    function spawnHeart(x){
+      const el = document.createElement("div");
+      el.className = "heart";
+      el.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+      const left = (typeof x === "number") ? x : Math.random()*100;
+      el.style.left = left + "vw";
+      el.style.bottom = "-10vh";
+      el.style.animationDuration = (6 + Math.random()*3.0) + "s";
+      el.style.fontSize = (14 + Math.random()*16) + "px";
+      hearts.appendChild(el);
+      setTimeout(() => el.remove(), 9000);
+    }
+
+    function burstHearts(count){
+      for(let i=0;i<count;i++){
+        setTimeout(() => spawnHeart(10 + Math.random()*80), i*75);
+      }
+    }
+
+    // ambient hearts (más suave)
+    setInterval(() => {
+      if (Math.random() < 0.28) spawnHeart();
+    }, 950);
+
+    // Start
+    updateCounter();
+    setInterval(updateCounter, 1000);
+    applyTreeProgress(0);
+
+    if (isNaN(met.getTime())) {
+      metDateLabel.textContent = "⚠️ Configura la fecha en el código: const dateWeMet = \"YYYY-MM-DDTHH:mm:ss\";";
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
